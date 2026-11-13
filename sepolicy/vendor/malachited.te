@@ -7,11 +7,11 @@ init_daemon_domain(malachited)
 
 # daemon
 allow malachited self:unix_stream_socket create_stream_socket_perms;
-allow malachited self:capability { sys_admin dac_override dac_read_search };
+allow malachited self:capability { sys_admin };
 allow malachited sysfs:dir r_dir_perms;
 allow malachited sysfs:file rw_file_perms;
 allow malachited proc:file rw_file_perms;
-allow malachited block_device:blk_file rw_file_perms;
+allow malachited zram_device:blk_file rw_file_perms;
 allow malachited toolbox_exec:file rx_file_perms;
 
 # app -> daemon (only platform-signed apps)
