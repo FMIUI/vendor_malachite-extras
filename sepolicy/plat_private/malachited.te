@@ -17,4 +17,3 @@ allow malachited toolbox_exec:file rx_file_perms;
 allow platform_app socket_device:dir search;
 allow platform_app malachited_socket:sock_file write;
 allow platform_app malachited:unix_stream_socket connectto;
-typeattribute malachited malachited_exempt;
