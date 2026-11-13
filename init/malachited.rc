@@ -6,7 +6,7 @@ on boot
 on post-fs-data
     mkdir /data/vendor/goodix 0777 system system
 
-service malachited /vendor/bin/malachited
+service malachited /system_ext/bin/malachited
     class main
     user root
     group system

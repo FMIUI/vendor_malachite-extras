@@ -31,6 +31,6 @@ cc_binary {
     name: "malachited",
     srcs: ["daemon/malachited.c"],
     shared_libs: ["libcutils", "liblog"],
-    vendor: true,
+    system_ext_specific: true,
     init_rc: ["init/malachited.rc"],
 }

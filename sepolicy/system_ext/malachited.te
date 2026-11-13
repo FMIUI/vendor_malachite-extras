@@ -1,0 +1,18 @@
+type malachited, domain;
+typeattribute malachited coredomain;
+type malachited_exec, system_file_type, exec_type, file_type;
+type malachited_socket, file_type;
+
+init_daemon_domain(malachited)
+
+allow malachited self:unix_stream_socket create_stream_socket_perms;
+allow malachited self:capability { sys_admin };
+allow malachited sysfs:dir r_dir_perms;
+allow malachited sysfs:file rw_file_perms;
+allow malachited proc:file rw_file_perms;
+allow malachited toolbox_exec:file rx_file_perms;
+
+# app -> daemon (platform-signed apps only)
+allow platform_app socket_device:dir search;
+allow platform_app malachited_socket:sock_file write;
+allow platform_app malachited:unix_stream_socket connectto;
