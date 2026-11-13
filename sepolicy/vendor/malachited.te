@@ -1,0 +1,27 @@
+type malachited, domain;
+type malachited_exec, exec_type, vendor_file_type, file_type;
+type malachited_socket, file_type;
+type sysfs_malachite_dispparam, sysfs_type, fs_type;
+
+init_daemon_domain(malachited)
+
+# daemon
+allow malachited self:unix_stream_socket create_stream_socket_perms;
+allow malachited self:capability { sys_admin dac_override dac_read_search };
+allow malachited sysfs:dir r_dir_perms;
+allow malachited sysfs:file rw_file_perms;
+allow malachited proc:file rw_file_perms;
+allow malachited block_device:blk_file rw_file_perms;
+allow malachited toolbox_exec:file rx_file_perms;
+
+# app -> daemon (only platform-signed apps)
+allow platform_app socket_device:dir search;
+allow platform_app malachited_socket:sock_file write;
+allow platform_app malachited:unix_stream_socket connectto;
+
+# Goodix test HAL writes its display setting through /dev/gf_disp_param
+allow hal_fingerprint_default sysfs_malachite_dispparam:file rw_file_perms;
+
+# Goodix test app writes results into /data/vendor/goodix
+allow platform_app fingerprint_data_file:dir create_dir_perms;
+allow platform_app fingerprint_data_file:file create_file_perms;

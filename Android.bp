@@ -1,0 +1,36 @@
+soong_namespace {}
+
+android_app_import {
+    name: "MalachiteParts",
+    owner: "malachite",
+    apk: "apps/MalachiteParts.apk",
+    certificate: "platform",
+    system_ext_specific: true,
+    dex_preopt: { enabled: false },
+}
+
+android_app_import {
+    name: "MMIGroup_NoIcon",
+    owner: "xiaomi",
+    apk: "apps/MMIGroup_NoIcon.apk",
+    certificate: "platform",
+    system_ext_specific: true,
+    dex_preopt: { enabled: false },
+}
+
+android_app_import {
+    name: "goodix_sz",
+    owner: "goodix",
+    apk: "apps/goodix_sz.apk",
+    certificate: "platform",
+    system_ext_specific: true,
+    dex_preopt: { enabled: false },
+}
+
+cc_binary {
+    name: "malachited",
+    srcs: ["daemon/malachited.c"],
+    shared_libs: ["libcutils", "liblog"],
+    vendor: true,
+    init_rc: ["init/malachited.rc"],
+}

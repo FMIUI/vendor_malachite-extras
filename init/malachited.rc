@@ -1,0 +1,13 @@
+on boot
+    symlink /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param /dev/gf_disp_param
+    chown system system /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param
+    chmod 0664 /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param
+
+on post-fs-data
+    mkdir /data/vendor/goodix 0777 system system
+
+service malachited /vendor/bin/malachited
+    class main
+    user root
+    group system
+    socket malachited stream 0666 system system
