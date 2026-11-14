@@ -17,3 +17,4 @@ allow factory_services proc_meminfo:file r_file_perms;
 allow platform_app_all factory_interface_hwservice:hwservice_manager find;
 binder_call(platform_app_all, factory_services)
 binder_call(factory_services, platform_app_all)
+get_prop(platform_app_all, vendor_fp_prop)
