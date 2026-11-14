@@ -211,8 +211,7 @@ static void do_gfprep(int c) {
         }
         if (pid > 0) gf_watch_until = now + 180;
     }
-    reply(c, "ok
-");
+    reply(c, "ok\n");
 }
 
 static void handle(int c) {
