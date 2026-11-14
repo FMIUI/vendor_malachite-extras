@@ -31,7 +31,7 @@ set_prop(system_app, ctl_mmi_factory_prop)
 # The daemon's allowlist (kReadable/kWritable) still limits it to the exact paths Parts uses.
 allow malachited { sysfs_type proc_type }:dir r_dir_perms;
 allow malachited { sysfs_type proc_type }:lnk_file read;
-allow malachited { sysfs_type proc_type }:file rw_file_perms;
+allow malachited { sysfs_type proc_type -sysfs_uhid -sysfs_pgsize_migration -sysfs_devices_cs_etm -proc_kallsyms -sysfs_batteryinfo -proc_security -sysfs_usermodehelper -usermodehelper -sysfs_leds -proc_bpf }:file rw_file_perms;
 
 # ZRAM: reset, resize and re-enable swap
 allow malachited swap_block_device:blk_file rw_file_perms;
