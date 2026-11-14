@@ -21,3 +21,7 @@ allow platform_app_all malachited:unix_stream_socket connectto;
 # Xiaomi CIT (com.factory.mmigroup) asks init to start its factory service
 system_internal_prop(ctl_mmi_factory_prop)
 set_prop(platform_app_all, ctl_mmi_factory_prop)
+
+# Apps run with per-app MLS categories; let them reach this socket/daemon
+typeattribute malachited_socket mlstrustedobject;
+typeattribute malachited mlstrustedsubject;

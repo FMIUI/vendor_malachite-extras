@@ -4,4 +4,5 @@ PRODUCT_PACKAGES += \
     MalachiteParts \
     MMIGroup_NoIcon \
     goodix_sz \
-    malachited
+    malachited \
+    interfaces.factoryInterface@1.0-service
