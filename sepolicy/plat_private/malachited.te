@@ -14,6 +14,6 @@ allow malachited proc:file rw_file_perms;
 allow malachited ram_device:blk_file rw_file_perms;
 allow malachited toolbox_exec:file rx_file_perms;
 
-allow platform_app socket_device:dir search;
-allow platform_app malachited_socket:sock_file write;
-allow platform_app malachited:unix_stream_socket connectto;
+allow platform_app_all socket_device:dir search;
+allow platform_app_all malachited_socket:sock_file write;
+allow platform_app_all malachited:unix_stream_socket connectto;
