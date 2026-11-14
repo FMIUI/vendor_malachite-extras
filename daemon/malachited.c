@@ -11,6 +11,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+#include <time.h>
 #include <sys/swap.h>
 #include <sys/time.h>
 #include <sys/wait.h>
@@ -185,11 +186,33 @@ static void do_zram(int c, const char *size_str, const char *algo) {
 
 #define GF_NODE "/sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param"
 
-/* The display driver resets this node to root:0644; the Goodix HAL (user system) must write it. */
+static int gf_fix(void) {
+    struct stat st;
+    if (stat(GF_NODE, &st) == 0 && st.st_uid == 1000 && st.st_gid == 1000 && (st.st_mode & 0777) == 0664) return 0;
+    if (chown(GF_NODE, 1000, 1000) < 0) return -errno;
+    if (chmod(GF_NODE, 0664) < 0) return -errno;
+    return 0;
+}
+
+static time_t gf_watch_until;
+
+/* The display driver resets this node to root:0644 on panel changes, including mid-test.
+ * Fix it now, then keep re-applying it every 0.5 s for 3 minutes in a child process. */
 static void do_gfprep(int c) {
-    if (chown(GF_NODE, 1000, 1000) < 0) { reply_err(c, "chown", errno); return; }
-    if (chmod(GF_NODE, 0664) < 0) { reply_err(c, "chmod", errno); return; }
-    reply(c, "ok\n");
+    int e = gf_fix();
+    if (e < 0) { reply_err(c, "gfprep", -e); return; }
+    time_t now = time(NULL);
+    if (now >= gf_watch_until) {
+        pid_t pid = fork();
+        if (pid == 0) {
+            close(c);
+            for (int i = 0; i < 360; i++) { gf_fix(); usleep(500000); }
+            _exit(0);
+        }
+        if (pid > 0) gf_watch_until = now + 180;
+    }
+    reply(c, "ok
+");
 }
 
 static void handle(int c) {
@@ -233,6 +256,7 @@ static void handle(int c) {
 
 int main(void) {
     signal(SIGPIPE, SIG_IGN);
+    signal(SIGCHLD, SIG_IGN);  /* reap the gfprep watcher automatically */
     int s = android_get_control_socket("malachited");
     if (s < 0) {
         ALOGE("no control socket: %s", strerror(errno));
