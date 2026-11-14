@@ -6,3 +6,7 @@ PRODUCT_PACKAGES += \
     goodix_sz \
     malachited \
     interfaces.factoryInterface@1.0-service
+
+# CIT test configs read by the factory service and the CIT app
+PRODUCT_COPY_FILES += $(foreach f,$(notdir $(wildcard vendor/malachite-extras/factory/mmigroup/*.json)),\
+    vendor/malachite-extras/factory/mmigroup/$(f):$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/$(f))
