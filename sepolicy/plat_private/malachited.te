@@ -26,3 +26,13 @@ set_prop(platform_app_all, ctl_mmi_factory_prop)
 typeattribute malachited_socket mlstrustedobject;
 typeattribute malachited mlstrustedsubject;
 set_prop(system_app, ctl_mmi_factory_prop)
+
+# Parts nodes carry their own labels (some vendor-defined), reachable only via the attributes.
+# The daemon's allowlist (kReadable/kWritable) still limits it to the exact paths Parts uses.
+allow malachited { sysfs_type proc_type }:dir r_dir_perms;
+allow malachited { sysfs_type proc_type }:lnk_file read;
+allow malachited { sysfs_type proc_type }:file rw_file_perms;
+
+# ZRAM: reset, resize and re-enable swap
+allow malachited swap_block_device:blk_file rw_file_perms;
+allow malachited toolbox_exec:file { rx_file_perms execute_no_trans };
