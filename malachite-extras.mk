@@ -8,5 +8,5 @@ PRODUCT_PACKAGES += \
     interfaces.factoryInterface@1.0-service
 
 # CIT test configs read by the factory service and the CIT app
-PRODUCT_COPY_FILES += $(foreach f,$(notdir $(wildcard vendor/malachite-extras/factory/mmigroup/*.json)),\
+PRODUCT_COPY_FILES += $(foreach f,$(shell cd vendor/malachite-extras/factory/mmigroup && find . -type f | sed 's|^\./||'),\
     vendor/malachite-extras/factory/mmigroup/$(f):$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/$(f))
