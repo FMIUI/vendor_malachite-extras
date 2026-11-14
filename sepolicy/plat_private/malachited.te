@@ -26,4 +26,3 @@ set_prop(platform_app_all, ctl_mmi_factory_prop)
 typeattribute malachited_socket mlstrustedobject;
 typeattribute malachited mlstrustedsubject;
 set_prop(system_app, ctl_mmi_factory_prop)
-allow malachited self:capability { dac_override dac_read_search };
