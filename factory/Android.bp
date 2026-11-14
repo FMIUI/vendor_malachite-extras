@@ -14,6 +14,7 @@ cc_prebuilt_binary {
         "interfaces.customNvService@1.0_mx",
         "libFactoryHALCommon_mx",
         "vendor.mediatek.hardware.nvram@1.1_mx",
+        "vendor.mediatek.hardware.nvram@1.0_mx",
         "android.hardware.light@2.0_mx",
     ],
 }
@@ -72,6 +73,16 @@ cc_prebuilt_library_shared {
     name: "android.hardware.light@2.0_mx",
     stem: "android.hardware.light@2.0",
     target: { android_arm64: { srcs: ["lib64/android.hardware.light@2.0.so"] } },
+    compile_multilib: "64",
+    vendor: true,
+    check_elf_files: false,
+    strip: { none: true },
+}
+
+cc_prebuilt_library_shared {
+    name: "vendor.mediatek.hardware.nvram@1.0_mx",
+    stem: "vendor.mediatek.hardware.nvram@1.0",
+    target: { android_arm64: { srcs: ["lib64/vendor.mediatek.hardware.nvram@1.0.so"] } },
     compile_multilib: "64",
     vendor: true,
     check_elf_files: false,
