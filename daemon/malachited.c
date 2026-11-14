@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/swap.h>
 #include <sys/time.h>
 #include <sys/wait.h>
@@ -182,6 +183,15 @@ static void do_zram(int c, const char *size_str, const char *algo) {
     reply(c, "ok\n");
 }
 
+#define GF_NODE "/sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param"
+
+/* The display driver resets this node to root:0644; the Goodix HAL (user system) must write it. */
+static void do_gfprep(int c) {
+    if (chown(GF_NODE, 1000, 1000) < 0) { reply_err(c, "chown", errno); return; }
+    if (chmod(GF_NODE, 0664) < 0) { reply_err(c, "chmod", errno); return; }
+    reply(c, "ok\n");
+}
+
 static void handle(int c) {
     struct timeval tv = {2, 0};
     setsockopt(c, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
@@ -214,6 +224,8 @@ static void handle(int c) {
         if (sp == NULL) { reply(c, "err usage\n"); return; }
         *sp = '\0';
         do_zram(c, sz, sp + 1);
+    } else if (strcmp(line, "gfprep") == 0) {
+        do_gfprep(c);
     } else {
         reply(c, "err unknown\n");
     }

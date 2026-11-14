@@ -36,3 +36,7 @@ allow malachited { sysfs_type proc_type -sysfs_uhid -sysfs_pgsize_migration -sys
 # ZRAM: reset, resize and re-enable swap
 allow malachited swap_block_device:blk_file rw_file_perms;
 allow malachited toolbox_exec:file { rx_file_perms execute_no_trans };
+
+# gfprep: hand the Goodix display node back to system after the driver resets it
+allow malachited self:capability { chown fowner };
+allow malachited { sysfs_type -sysfs_uhid -sysfs_pgsize_migration -sysfs_devices_cs_etm -sysfs_batteryinfo -sysfs_usermodehelper -sysfs_leds }:file setattr;
