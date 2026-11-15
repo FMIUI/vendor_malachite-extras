@@ -12,4 +12,4 @@ PRODUCT_COPY_FILES += $(foreach f,$(shell cd vendor/malachite-extras/factory/mmi
     vendor/malachite-extras/factory/mmigroup/$(f):$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/$(f))
 
 # MediaTek telephony classes CIT needs, loaded only by CIT
-PRODUCT_PACKAGES += mediatek-telephony-base-cit cit-mtk-libs.xml
+PRODUCT_PACKAGES += mediatek-ims-base-cit mediatek-telephony-base-cit cit-mtk-libs.xml

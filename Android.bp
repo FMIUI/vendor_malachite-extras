@@ -16,6 +16,7 @@ android_app_import {
     owner: "xiaomi",
     apk: "apps/MMIGroup_NoIcon.apk",
     certificate: "platform",
+    optional_uses_libs: ["mediatek-ims-base", "mediatek-telephony-base"],
     system_ext_specific: true,
     dex_preopt: { enabled: false },
 }
