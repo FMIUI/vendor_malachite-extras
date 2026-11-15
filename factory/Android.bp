@@ -15,7 +15,6 @@ cc_prebuilt_binary {
         "libFactoryHALCommon_mx",
         "vendor.mediatek.hardware.nvram@1.1_mx",
         "vendor.mediatek.hardware.nvram@1.0_mx",
-        "android.hardware.light@2.0_mx",
     ],
 }
 

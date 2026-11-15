@@ -13,3 +13,8 @@ PRODUCT_COPY_FILES += $(foreach f,$(shell cd vendor/malachite-extras/factory/mmi
 
 # MediaTek telephony classes CIT needs, loaded only by CIT
 PRODUCT_PACKAGES += mediatek-ims-base-cit mediatek-telephony-base-cit cit-mtk-libs.xml
+
+# Android 17 no longer builds the HIDL light library the factory service needs; older trees build their own.
+ifneq ($(shell grep -s "^attribute platform_app_all;" system/sepolicy/public/attributes),)
+PRODUCT_PACKAGES += android.hardware.light@2.0_mx
+endif
