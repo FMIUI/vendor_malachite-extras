@@ -15,6 +15,7 @@ chk "CIT normal-mode entry exported"          "x $CIT | grep -A4 '\"com.factory.
 chk "CIT MediaTek libraries declared"         "[ \$(x $CIT | grep -c 'E: uses-library') -ge 2 ] && [ -f $O/system_ext/etc/permissions/cit-mtk-libs.xml ]"
 chk "CIT MediaTek library jars"               "[ \$(ls $O/system_ext/framework/*-cit.jar 2>/dev/null | wc -l) -ge 2 ]"
 chk "factory service + interface line"        "[ -f $O/vendor/bin/hw/interfaces.factoryInterface@1.0-service ] && grep -rqs 'interface interfaces.factoryInterface' $O/vendor/etc/init/"
+chk "factory HIDL light library (Android 17)"  "! grep -qs '^attribute platform_app_all;' system/sepolicy/public/attributes || [ -f $O/vendor/lib64/android.hardware.light@2.0.so ]"
 chk "factory nvram@1.0 library"               "[ -f $O/vendor/lib64/vendor.mediatek.hardware.nvram@1.0.so ]"
 chk "CIT configs (vendor/etc/mmigroup)"       "[ -f $O/vendor/etc/mmigroup/factoryInterfaceConfig.json ]"
 chk "Goodix test screen exported"             "x $GX | grep -B4 -A4 '\\.MainActivity\"' | grep -q 'exported.*=true'"
