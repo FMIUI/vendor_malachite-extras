@@ -7,7 +7,9 @@ Works on Android 16 and 17 trees.
 
 ## Integrate
 
-1. Local manifest (`.repo/local_manifests/malachite-extras.xml`):
+1. Install git-lfs first (`sudo apt install git-lfs && git lfs install`), otherwise the blobs sync as pointers.
+
+2. Local manifest (`.repo/local_manifests/malachite-extras.xml`):
 
        <manifest>
          <remote name="fmiui" fetch="https://github.com/FMIUI" />
